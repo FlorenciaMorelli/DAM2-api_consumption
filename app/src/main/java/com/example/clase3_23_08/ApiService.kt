@@ -10,5 +10,6 @@ interface ApiService {
 
     //  Indicamos qué método vamos a usar y declaramos la función
     @GET
-    fun getDogsByBreed(@Url url:String):Response<DogResponse>
+    suspend fun getDogsByBreed(@Url url:String):Response<DogResponse>
+    //  El suspend le dice que se va a ejecutar en otro hilo en una corrutina
 }
