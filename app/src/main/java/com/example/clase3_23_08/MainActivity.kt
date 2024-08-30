@@ -1,6 +1,7 @@
 package com.example.clase3_23_08
 
 import android.os.Bundle
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -25,9 +26,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        initRecycler()
-        searchByName("mix")
+        binding.svDogs.setOnQueryTextListener(this)
 
+        initRecycler()
     }
 
     private fun initRecycler(){
@@ -72,5 +73,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun showError(){
         Toast.makeText(this, "Acá hubo un error", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        //  Siempre que la query no sea nula
+        query?.let {
+            searchByName(it)
+            return true
+        }
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return true
     }
 }
